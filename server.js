@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./config/connection');
 // Require model
-const { Item } = require('./models');
+const { User, Thought } = require('./models');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,9 +9,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/all-items', (req, res) => {
-
-  Item.find({}, (err, result) => {
+app.get('/users', (req, res) => {
+  User.find({}, (err, result) => {
     if (err) {
       res.status(500).send({ message: 'Internal Server Error' });
     } else {
@@ -19,6 +18,17 @@ app.get('/all-items', (req, res) => {
     }
   });
 });
+
+app.get('/users/:_id', (req, res) => {
+    User.find({user: req.params.user }, (err, result) => {
+      if (result) {
+        res.status(200).json(result);
+        res.status(500).send({ message: 'Internal Server Error' });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  });
 
 app
 
