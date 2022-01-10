@@ -1,5 +1,5 @@
 // Require Thoughts and Users Models
-const {Thoughts, Users} = require('../models');
+const {Thoughts, Users} = require('../models/Thought');
 
 
 const thoughtsController = {

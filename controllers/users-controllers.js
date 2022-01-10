@@ -1,10 +1,10 @@
 // Require Users Model
-const {Users} = require('../models');
+const {Users} = require('../models/User');
 
 const usersController = {
  
     createUsers(req, res) {
-        Users.create(req.body)
+        Users.create(req.body.json)
         .then(dbUsersData => res.json(dbUsersData))
         .catch(err => res.status(400).json(err));
     },
