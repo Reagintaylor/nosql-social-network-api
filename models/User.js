@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose')
-// const { Thought } = require('Thought')
 
 // function for validating email
 var validateEmail = function(email) {

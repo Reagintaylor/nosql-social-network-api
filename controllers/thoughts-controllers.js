@@ -1,11 +1,11 @@
 // Require Thoughts and Users Models
-const {Thoughts, Users} = require('../models/Thought');
+const { Thought } = require('../models');
 
 
 const thoughtsController = {
 
     createThoughts(req, res) {
-        Thoughts.create(req.body)
+        Thought.create(req.body)
         .then((dbthoughtsData) => {
             return Users.findOneAndUpdate(
                 { _id: req.params.userId}, 
@@ -23,7 +23,7 @@ const thoughtsController = {
     },
 
     getAllThoughts(req,res) {
-        Thoughts.find({})
+        Thought.find({})
         .populate({path: 'reactions', select: '-__v'})
         .select('-__v')
         // .sort({_id: -1})
@@ -34,7 +34,7 @@ const thoughtsController = {
     },
 
     getThoughtsById(req, res) {
-        Thoughts.findOne({ _id: req.params.id })
+        Thought.findOne({ _id: req.params.id })
         .populate({path: 'reactions', select: '-__v'})
         .select('-__v')
         .then(dbThoughtsData => {
@@ -51,7 +51,7 @@ const thoughtsController = {
     },
 
     updateThoughts(req, res) {
-        Thoughts.findOneAndUpdate(
+        Thought.findOneAndUpdate(
             {_id: req.params.id}, 
             { $set: req.body })
         .populate({path: 'reactions', select: '-__v'})
@@ -67,7 +67,7 @@ const thoughtsController = {
     },
 
     deleteThoughts(req, res) {
-        Thoughts.findOneAndDelete({_id: req.params.id})
+        Thought.findOneAndDelete({_id: req.params.id})
         .then(dbThoughtsData => {
             if (!dbThoughtsData) {
                 res.status(404).json({message: 'No thoughts with this id!'});
@@ -79,7 +79,7 @@ const thoughtsController = {
     },
 
     createReaction(req, res) {
-        Thoughts.findOneAndUpdate(
+        Thought.findOneAndUpdate(
             {_id: req.params.thoughtId}, 
             {$push: {reactions: body}}, 
             {new: true, runValidators: true})
@@ -97,7 +97,7 @@ const thoughtsController = {
     },
 
     deleteReaction(req, res) {
-        Thoughts.findOneAndUpdate(
+        Thought.findOneAndUpdate(
             {_id: req.params.thoughtId}, 
             {$pull: {reactions: {reactionId: req.params.reactionId}}}, 
             {new : true})

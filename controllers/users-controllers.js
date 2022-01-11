@@ -1,16 +1,16 @@
 // Require Users Model
-const {Users} = require('../models/User');
+const { User } = require('../models');
 
 const usersController = {
  
     createUsers(req, res) {
-        Users.create(req.body.json)
+        User.create(req.body)
         .then(dbUsersData => res.json(dbUsersData))
         .catch(err => res.status(400).json(err));
     },
 
     getAllUsers(req, res) {
-        Users.find({})
+        User.find({})
         .populate({path: 'thoughts', select: '-__v'})
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
@@ -23,7 +23,7 @@ const usersController = {
     },
 
     getUsersById(req, res) {
-        Users.findOne({_id: req.params.id })
+        User.findOne({_id: req.params.id })
         .populate({path: 'thoughts', select: '-__v'})
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
@@ -41,7 +41,7 @@ const usersController = {
     },
 
     updateUsers({params, body}, res) {
-        Users.findOneAndUpdate(
+        User.findOneAndUpdate(
             {_id: req.params.id}, 
             body, 
             {new: true, runValidators: true})
@@ -56,7 +56,7 @@ const usersController = {
     },
 
     deleteUsers(req, res) {
-        Users.findOneAndDelete(
+        User.findOneAndDelete(
             {_id: req.params.id})
         .then(dbUsersData => {
             if(!dbUsersData) {
@@ -69,7 +69,7 @@ const usersController = {
     },
 
     addFriend(req, res) {
-        Users.findOneAndUpdate(
+        User.findOneAndUpdate(
             {_id: req.params.id}, 
             {$push: { friends: req.params.friendId}}, 
             {new: true})
@@ -86,7 +86,7 @@ const usersController = {
     },
 
     deleteFriend(req, res) {
-        Users.findOneAndUpdate(
+        User.findOneAndUpdate(
             {_id: req.params.id}, 
             {$pull: { friends: req.params.friendId}}, 
             {new: true})
