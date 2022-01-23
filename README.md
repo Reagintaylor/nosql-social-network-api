@@ -25,7 +25,8 @@ The technology I used was the no sql platform Mongoose and Javascript.
 
 ## Video link
 
-- [video]()
+- [User video](https://watch.screencastify.com/v/kNNFlVOO2jfWlOASToEy)
+- [Thoughts video](https://watch.screencastify.com/v/3XEANE4byR2RUHRClsrH)
 
 - [github] (https://github.com/Reagintaylor/nosql-social-network-api)
 
